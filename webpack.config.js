@@ -8,8 +8,8 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['react']
-          }
+            presets: ['react'],
+          },
         },
       },
     ],
@@ -20,6 +20,3 @@ module.exports = {
 	  path: __dirname + '/public'
   }
 }
-
-
-
