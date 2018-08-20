@@ -148,9 +148,38 @@ const appendLeading = (val) => {
   }
 }
 
-generateBooked();
-generateUsers();
-generateHosts();
-generateReviews();
-generateListings();
-generateReservations();
+const generateInformation = () => {
+  console.log('generating information');
+  const rl = readline.createInterface({
+  input: fs.createReadStream('sampleData.csv')
+  });
+
+  let count = 0;
+
+  let out = fs.createWriteStream('./csv_files/informationSample.csv', {flag: 'a'});
+
+  rl.on('line', (line) => {
+    count++;
+    let dates = generateDate();
+    const lineSplit = line.split(',');
+              //    id                userName                    total_reviews             avg_rating            name           weekly_views           min_stay                 max_guests                fees                  tax_rate                     rate               check_in   check_out.     total_adults.        total_pups              total_charge
+    out.write(`${lineSplit[0]},${faker.internet.userName()},${randomNumber(1000, 60)},${randomNumber(5, 1)},${lineSplit[1]},${randomNumber(100, 50)},${randomNumber(10, 3)},${randomNumber(10, 7)},${randomNumber(250, 60)},${randomNumber(15, 10)}, ${randomNumber(300, 100)},${dates[0]},${dates[1]},${randomNumber(10,7)},${randomNumber(8,2)},${randomNumber(2000, 1000)} \r\n`, 'utf-8');
+    if(count === 2500000) {
+      console.log(25);
+    } else if(count === 5000000) {
+      console.log(50);
+    } else if(count === 7500000) {
+      console.log(75);
+    } else if (count === 10000000) {
+      console.log(100);
+    }
+  });
+}
+
+// generateBooked();
+// generateUsers();
+// generateHosts();
+// generateReviews();
+// generateListings();
+// generateReservations();
+// generateInformation();
