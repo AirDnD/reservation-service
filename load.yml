@@ -1,0 +1,24 @@
+config:
+  target: "http://localhost:3003"
+  phases:
+    - duration: 60
+      arrivalRate: 160
+  variables:
+    listings: 
+      - [1, 12, 123, 1234, 12345, 123456, 1234567, 10000000]
+    listingAndDates:
+      - ['1?month=2019-1','12?month=2018-8','123?month=2019-8','1234?month=2020-7','12345?month=2018-1','12346?month=2020-10']
+scenarios:
+  - flow:
+    - loop:
+      - get:
+          url: "/api/listings/{{ $loopElement }}"
+      over: listings
+    - loop:
+      - get:
+          url: "/api/dates/{{ $loopElement }}"
+      over: listingAndDates
+    - loop:
+      - get:
+          url: "/api/reservations/{{ $loopElement }}"
+      over: listings
